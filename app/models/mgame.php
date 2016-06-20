@@ -6,7 +6,15 @@ class mGame extends Model{
 			parent::__construct();
 			
 		}
-//funcion para cargar la fuente de las imagenes el nombre y el id para poder realizar la funcion rangoup y crear la relacion el nivel
+    /**
+      * selectgame() : funcion para cargar la fuente de las imagenes el nombre y el id para poder realizar la funcion rangoup y crear la relacion el nivel
+      *
+      * @param $juego para saber que juego ha de cargar
+      * @param $nivel para saber que nivel
+      * @author TicEmocionat
+      * @package Models
+      *
+    */
 		function selectgame($juego,$nivel){
     try{
      $query="SELECT multimedia.fuente, multimedia.nombre, niveles.idniveles 
@@ -25,7 +33,15 @@ class mGame extends Model{
        echo "Error:".$e->getMessage();
    }
   }
-//funcion que comprueba si ya se habia pasado el nivel, en caso contrario le suma los puntos y crea la relacion para poder saber si lo ha completado
+    /**
+      * rangoup() : funcion que comprueba si ya se habia pasado el nivel, en caso contrario le suma los puntos y crea la relacion para poder saber si lo ha completado
+      *
+      * @param $juego para hacer la relación y asi no sumar puntos si ya ha completado el juego
+      * @param $nivel y el nivel
+      * @author TicEmocionat
+      * @package Models
+      *
+    */
 function rangoup($juego,$nivel){
 try{ 
             $id = $_SESSION['id_usuario'];

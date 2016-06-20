@@ -6,6 +6,14 @@ class mPaint extends Model{
 			parent::__construct();
 		}
 
+		/**
+      * guardar() : función que guarda la imagen en nuestro servidor y crea una relacion con el usuario
+      *
+      * @param $paint variable que almacen el dibujo en base64
+      * @author TicEmocionat
+      * @package Models
+      *
+    */
 		function guardar($paint){
 			//Cogemos el nombre de usuario con una session donde guardamos el id
 			$id = $_SESSION['id_usuario'];
@@ -17,7 +25,7 @@ class mPaint extends Model{
 		    $name= $row[0]['nombre'];
 		    //lo guardamos en una variable
 		    $datenow = new DateTime();
-			$fecha = $datenow->format('Y-m-d');
+			$fecha = $datenow->format('Y-m-d  H-i-s');
 			//cogemos la fecha y la concatenamos con el nombre para que no se sobrescriba cada vez que guardamos
 			$nombrear=$fecha." ".$name;
 			$img = $paint;
@@ -28,23 +36,23 @@ class mPaint extends Model{
 			$fileData = base64_decode($img);
 			$im = imagecreatefromstring($fileData);  //convertir a imagen
 			if ($im !== false) {
-			    imagejpeg($im, '../M-master/pub/images/dibujo/'.$nombrear.'.jpg'); //guardar a disco      '../M-master/pub/images/dibujo/'+    
+			    imagejpeg($im, '../M-master/pub/images/dibujo/'.$nombrear.'.jpg'); //$nombrear //guardar a disco      '../M-master/pub/images/dibujo/'+    
 			    imagedestroy($im); //liberar memoria
 			    //imagejpeg($im, 'textosimple.jpg'+$name+$fecha+'.jpg');
 			}
 			try{ 
 					//insertamos la fuente de la imagen en la base de datos y creamos la relacion con el usuario
-					$imagen = '/M-master/pub/images/dibujo/'.$name.'.jpg';
-					$query2='INSERT INTO multimedia (fuente,nombre) VALUES (:imagen, "test");';
-		            $this->query($query2);
-		            $this->bind(':imagen',$imagen);
-					$this->execute();
-					$lastId = $this->lastInsertId();
-					$query3='INSERT INTO detalle_imagen_usuario (usuarios_idusuarios,multimedia_idmultimedia) VALUES (:iduser, :idmagen);';
-		            $this->query($query3);
-		            $this->bind(':iduser',$id);
-		            $this->bind(':idmagen',$lastId);
-					$this->execute();
+						$imagen = '/M-master/pub/images/dibujo/'.$nombrear.'.jpg';
+						$query2='INSERT INTO multimedia (fuente,nombre) VALUES (:imagen, "test");';
+			            $this->query($query2);
+			            $this->bind(':imagen',$imagen);
+						$this->execute();
+						$lastId = $this->db->lastInsertId();
+						$query3='INSERT INTO detalle_imagen_usuario (foto_perfil,usuarios_idusuarios,multimedia_idmultimedia) VALUES (0,:iduser, :idmagen);';
+			            $this->query($query3);
+			            $this->bind(':iduser',$id);
+			            $this->bind(':idmagen',$lastId);
+						$this->execute();
 				return TRUE;
 		    }catch(PDOException $e){
 		       echo "Error:".$e->getMessage();
@@ -52,3 +60,4 @@ class mPaint extends Model{
 		}
 	}
 ?>	
+

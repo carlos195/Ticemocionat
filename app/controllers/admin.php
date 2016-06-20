@@ -19,7 +19,15 @@
 			$this -> ajax_set($list);
 		}
 
-		/*Listamos todos los usuarios, hacemos la llamada de la funcion y el retorno de array*/
+		/**
+	  * listuser() : Listamos todos los usuarios, hacemos la llamada de la funcion y el retorno de array
+	  *
+	  * 
+	  *
+	  * @author TicEmocionat
+	  * @package controllers
+	  *
+  	*/
 		function listuser(){
 			if(!empty($_GET['paginado'])){
 				$pag = $_GET['paginado'];
@@ -30,7 +38,15 @@
 			$this -> ajax_set($list);
 		}
 
-		/*Hacemos un bucle para borrar a tantos usuarios como de grande sea el array 'usuario' pasado por POST*/
+		/**
+	  * deleteuser() : Función para eliminar users, Hacemos un bucle para borrar a tantos usuarios como de grande sea el array 'usuario' pasado por POST
+	  *
+	  * 
+	  *
+	  * @author TicEmocionat
+	  * @package controllers
+	  *
+  	*/
 		function deleteuser(){
 			if(!empty($_POST['usuario'])){
 				foreach ($_POST['usuario'] as $user => $value){
@@ -40,7 +56,15 @@
 			$this -> ajax_set(array('redirect'=>APP_W.'admin'));
 		}
 
-		/*Revisamos todos los input que no esten vacios y realizamos un bucle para actualizarlos todos*/
+		/**
+	  * updateuser() : Función para actualizar users
+	  *
+	  * 
+	  *
+	  * @author TicEmocionat
+	  * @package controllers
+	  *
+  	*/
 		function updateuser(){
 			if(!empty($_POST['upemail'])){
 				$email = filter_input(INPUT_POST,'upemail',FILTER_SANITIZE_STRING);
@@ -59,7 +83,15 @@
 			$this -> ajax_set(array('redirect'=>APP_W.'admin'));
 		}
 
-		/*Creamos nuevo usuario como el registro normal a diferencia de poder escoger rol*/
+		/**
+	  * newuser() : Creamos nuevo usuario como el registro normal a diferencia de poder escoger rol
+	  *
+	  * 
+	  *
+	  * @author TicEmocionat
+	  * @package controllers
+	  *
+  	*/
 		function newuser(){
 			if(!empty($_POST['newemail']) && !empty($_POST['newpassword']) && !empty($_POST['newnombre']) && !empty($_POST['newpoblacion']) && !empty($_POST['newrol'])){
 				$poblacion = filter_input(INPUT_POST,'newpoblacion',FILTER_SANITIZE_STRING);

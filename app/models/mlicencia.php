@@ -4,16 +4,23 @@ class mLicencia extends Model{
 
 		function __construct(){
 			parent::__construct();
-			
-			/*try 
-			{
- 				$db= new PDO($dsn,$usuari,$password);
-			}catch(PDOException $e)
-			{
-				echo $e->getMessage();
-			}*/
 		}	
 
+		/**
+      * upgradeli() : función que sirve para actualizar la licencia de la aplicación hace una consulta a nuestra base para saber si hay datos si no se insertan y entonces actualiza su base de datos para poder seguir insertando registros
+      *
+      * @param $licencia
+      * @param $nombre nombre del cliente/empresa
+	   *@param $cif cif de la empresa
+	   *@param $address direccion de la empresa
+	   *@param $cp codigo postal
+	   *@param $cc cuenta corriente
+	   *@param $phone telefono
+	   *@param $ciudad  ciudad de la empresa
+      * @author TicEmocionat
+      * @package Models
+      *
+    */
 		function upgradeli($licencia,$nombre,$cif,$address,$cp,$cc,$phone,$ciudad){
 			$dsn='mysql:host=92.222.38.97;dbname=ticemocionat_negocio';
 			$usuari='ticemocionat_tic';

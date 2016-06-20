@@ -57,5 +57,19 @@
 				//$this -> ajax_set(array('redirect'=>APP_W.'home'));
 		}
 
+		/**
+	  * imagenpaint() : Proceso de conseguir imagenes realizadas en Paint del usuario
+	  *
+	  *
+	  * @author TicEmocionat
+	  * @package controllers
+	  *
+  	*/
+		function imagenpaint(){
+			$id = $_SESSION['id_usuario'];
+			$list = $this -> model -> imagenpaint($id);
+			$this -> ajax_set($list);
+		}
+
 	}
 ?>

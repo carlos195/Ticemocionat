@@ -10,9 +10,9 @@ class mCuentos extends Model{
 	/**
 	  * show_cuentos() : Recoge las imagenes, descripciones y nombres de todos los cuentos asignados al usuario
 	  *
-	  *
+	  *	@param $id que contiene la id del juego
 	  * @author TicEmocionat
-	  * @package controllers
+	  * @package Models
 	  *
   	*/
 

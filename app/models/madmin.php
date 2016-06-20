@@ -7,7 +7,15 @@
 			
 		}
 
-		/*Sacamos numero de usuarios para poder hacer paginado*/
+		/**
+	  * selectall() : Sacamos numero de usuarios
+	  *
+	  * 
+	  *
+	  * @author TicEmocionat
+	  * @package Models
+	  *
+  	*/
 		function selectall(){
 			try{
 				$sql = "SELECT * FROM usuarios";
@@ -23,7 +31,15 @@
 		   }
 		}
 
-		/*Seleccionamos a todos los usuarios*/
+		/**
+	  * selectuser() : Seleccionamos todos los usuarios
+	  *
+	  * 
+	  *	@param le pasamos $pag para saber el numero de paginas
+	  * @author TicEmocionat
+	  * @package Models
+	  *
+  	*/
 		function selectuser($pag){
 			try{
 				if($pag == NULL){
@@ -43,7 +59,15 @@
 		   }
 		}
 
-		/*Borramos a un usuario*/
+		/**
+	  * deluser() : Borramos a un usuario
+	  *
+	  * 
+	  *	@param $user le pasamos que es la id de usuario
+	  * @author TicEmocionat
+	  * @package Models
+	  *
+  	*/
 		function deluser($user){
 			try{
 				$sql = "DELETE FROM usuarios WHERE id_usuario=:user";
@@ -55,7 +79,18 @@
 		   }
 		}
 
-		/*Actualizamos a un usuario cualquier campo*/
+		/**
+	  * upuser() : Actualizamos a un usuario cualquier campo
+	  *
+	  * 
+	  *	@param $email email a actualizar
+	  * @param $nombre nombre a actualizar
+	  * @param $rol_user rol a actualizar
+	  * @param $user id del usuario que va a actualizar
+	  * @author TicEmocionat
+	  * @package Models
+	  *
+  	*/
 		function upuser($email,$nombre,$rol_user,$user){
 			try{
 				if($email != NULL){//Revisa que no sean campos NULL y va realizando sentencias sql de UPDATE de cada campo
@@ -90,7 +125,19 @@
 		   }
 		}
 
-		/*Añade a un usuario*/
+		/**
+	  * adduser() : Añade a un usuario
+	  *
+	  * 
+	  *	@param $nombre insertar del nuevo usuario
+	  * @param $password a insertar del nuevo usuario 
+	  * @param $email a insertar del nuevo usuario 
+	  * @param $poblacion a insertar del nuevo usuario
+	  * @param $rol_user a insertar del nuevo usuario 
+	  * @author TicEmocionat
+	  * @package Models
+	  *
+  	*/
 		function adduser($nombre,$password,$email,$poblacion,$rol_user){
 			try{
 				$sql = "SELECT * FROM usuarios WHERE email=:email";
@@ -110,8 +157,7 @@
 				   $this -> execute();
 				   $rol = $this -> single();
 
-				    $add = "INSERT INTO usuarios(poblacion,rol,nombre,password,email) VALUES(:poblacion,:rol,:nombre,MD5(:password),:email)";//llama al procedimiento
-				    //CALL insert_user(:nombre,:password,:email,:poblacion,:rol) NO PROCEDIMIENTO EN VESTA
+				    $add = "INSERT INTO usuarios(poblacion,rol,nombre,password,email,puntos) VALUES(:poblacion,:rol,:nombre,MD5(:password),:email,0)";//insertamos al usuario
 					$this -> query($add);
 					$this -> bind(':nombre',$nombre);
 					$this -> bind(':password',$password);

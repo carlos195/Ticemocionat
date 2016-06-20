@@ -1,6 +1,9 @@
 <div id="perfil-cont">
 <div class="container-perfil">
-  <nav class="nav-juegos"><ul><li><img src="/M-master/pub/images/juegos.png" /><a href="<?= APP_W.''; ?>">Juegos</a></li><li><img src="/M-master/pub/images/cuentos.png" /><a href="<?= APP_W.'cuentos'; ?>">Cuentos</a></li><li><img src="/M-master/pub/images/dibuja.png" /><a href="<?= APP_W.'paint'; ?>">Dibuja</a></li><li><img src="/M-master/pub/images/diccionario.png" /><a href="<?= APP_W.'emociones'; ?>">Diccionario</a></li></ul></nav>
+  <div class="menu"><div>≡</div> Menú</div>
+  <nav class="nav-juegos"><ul><a href="<?= APP_W.''; ?>"><li><img src="/M-master/pub/images/juegos.png" /><span>Juegos</span></li></a><a href="<?= APP_W.'cuentos'; ?>"><li><img src="/M-master/pub/images/cuentos.png" /><span>Cuentos</span></li></a><a href="<?= APP_W.'paint'; ?>"><li><img src="/M-master/pub/images/dibuja.png" /><span>Dibuja</span></li></a><a href="<?= APP_W.'emociones'; ?>"><li><img src="/M-master/pub/images/diccionario.png" /><span>Diccionario</span></li></a></ul></nav>
+
+  <div class="readcrumb"></div>
 
   <h2>Perfil de usuario</h2>
       <hr />
@@ -15,6 +18,7 @@
   <table class="tg">
 
   </table>
-   <div id="fr"> <hr /></div>
+   <div id="fr"> <hr /><div class="imagenpaint"><h3>Dibujos realizados</h3></div></div>
+
 </div>
 </div>

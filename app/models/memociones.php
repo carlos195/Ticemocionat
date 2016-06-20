@@ -6,7 +6,14 @@ class mEmociones extends Model{
 			parent::__construct();
 			
 		}
-//funcion que carga las emociones con nombre y descripcion y su respectiva imagen
+	/**
+	  * cargdiccionario() : funcion que carga las emociones con nombre y descripcion y su respectiva imagen
+	  *
+	  *	
+	  * @author TicEmocionat
+	  * @package Models
+	  *
+  	*/
 		function cargdiccionario(){
 			try{
 				

@@ -7,7 +7,15 @@
 			
 		}
 
-		/*Realizamos sentencias SQL de login que retorna un 1 si es Admin, un 2 si es usuario normal y un 0 si no es valido*/
+		/**
+      * login() : Realizamos sentencias SQL de login que retorna un 1 si es Admin, un 2 si es usuario normal y un 0 si no es valido
+      *
+      * @param $email para poder comprobar si es correcto o no
+      * @param $password para comprobar si coincide la contraseña
+      * @author TicEmocionat
+      * @package Models
+      *
+    */
 		function login($email,$password){
 			try{
 		     	$sql = "SELECT * FROM usuarios WHERE email=:email AND password=MD5(:password)";
@@ -37,6 +45,14 @@
 		   }
 		}
 
+		/**
+      * perfil() : Cargamos los datos del usuario
+      *
+      * @param $id para poder cargar los datos del usuario en cuestion
+      * @author TicEmocionat
+      * @package Models
+      *
+    */
 		function perfil($id){
 		    try{
 				$sql = "SELECT multimedia.fuente FROM ((usuarios INNER JOIN detalle_imagen_usuario ON usuarios.id_usuario=detalle_imagen_usuario.usuarios_idusuarios)INNER JOIN multimedia ON detalle_imagen_usuario.multimedia_idmultimedia=multimedia.idmultimedia) WHERE id_usuario=:id AND foto_perfil = TRUE"; 
@@ -53,6 +69,13 @@
 		   }
 		}
 
+		/**
+      * top_jugadores() : Cargamos los usuarios con mas puntos de base de datos
+      *
+      * @author TicEmocionat
+      * @package Models
+      *
+    */
 		function top_jugadores(){
 			try{
 				$sql = "SELECT multimedia.fuente,usuarios.nombre,usuarios.puntos FROM ((usuarios INNER JOIN detalle_imagen_usuario ON usuarios.id_usuario=detalle_imagen_usuario.usuarios_idusuarios)INNER JOIN multimedia ON detalle_imagen_usuario.multimedia_idmultimedia=multimedia.idmultimedia) WHERE foto_perfil = TRUE ORDER BY puntos DESC LIMIT 5"; 
@@ -68,6 +91,13 @@
 		   }
 		}
 
+		/**
+      * top_jugadores() : Cargamos todos los juegos
+      *
+      * @author TicEmocionat
+      * @package Models
+      *
+    */
 		function show_juegos($id){
 		    try{
 			     $query="SELECT multimedia.fuente, juegos.nombre, juegos.descripcion FROM juegos 

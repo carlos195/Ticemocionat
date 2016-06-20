@@ -17,7 +17,7 @@ public class TIC {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+                
         JFPedidos f = new JFPedidos();
         f.setVisible(true);
         

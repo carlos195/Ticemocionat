@@ -4,6 +4,42 @@ $(document).ready(function(){
   var juego = "";//juego a seleccionar
   var nivel = "";//nivel a seleccionar
 
+//Menu en Responsive, abrir o cerrar
+  $(".menu").on('click',function(){
+    if($("nav").css("display") == "none"){
+      $("nav").show(200);
+      $(".menu div").css("transform","rotate(90deg)");
+      $(".menu").css("background-color","rgba(107, 185, 240,1)");
+      $("#home-cont").css('height',(parseInt($("#home-cont").css('height'))+350)+'px');
+    }else{
+      $("nav").hide(200);
+      $(".menu div").css("transform","rotate(0deg)");
+      $(".menu").css("background-color","rgba(89, 171, 227,1)");
+      $("#home-cont").css('height',(parseInt($("#home-cont").css('height'))+(-350))+'px');
+    }
+  });
+
+  $(".recordar").on('click',function(){
+      $(".row").remove();
+      $(".box h3").remove();
+      $(".recordar").hide();
+      $(".box").css('padding-bottom','51px');
+      $(".box").prepend("<h3>Recordar contraseña</h3>");
+      $(".box").prepend("<div class='vuelta'>Volver</div>");
+      $("fieldset").append("<div class='row'><input type='text' class='login' placeholder='Email' name='recordar' /></div><div class='row'><input type='submit' value='Enviar' /></div>");
+    
+    $(".vuelta").on('click',function(){
+      $(".row").remove();
+      $(".box h3").remove();
+      $(".vuelta").remove();
+      $(".box").css('padding-bottom','37px');
+      $(".recordar").show();
+      $(".box").prepend("<h3>Entra en tu cuenta</h3>");
+      $("fieldset").append("<div class='row'><input type='text' class='login' name='email' placeholder='Usuario' /></div><div class='row'><input type='password' class='password' name='password' placeholder='Contraseña'/></div><div class='row'><input type='submit' value='Ingresar' /></div>");
+    });
+
+  });
+
   //Pantalla negra que se usará para el login
 	$("#black-screen").hide();
 
@@ -16,6 +52,10 @@ $(document).ready(function(){
 
   //Una vez hagamos clic encima del Login
   $("#login").on('click',function(){
+    $("#black-screen").show();
+  });
+
+  $("#login-img").on('click',function(){
     $("#black-screen").show();
   });
   
@@ -33,7 +73,7 @@ $(document).ready(function(){
     },
     autoOpen: false,
     draggable: false,
-    height: "216",
+    height: "249",
       width: "406",
       resizable: false,
       show: {
@@ -43,6 +83,10 @@ $(document).ready(function(){
     });
  
     $("#login").on('click',function(){
+      $("#dialog-login").dialog("open");
+    });
+
+    $("#login-img").on('click',function(){
       $("#dialog-login").dialog("open");
     });
   
@@ -108,6 +152,13 @@ $(document).ready(function(){
       }
     $(".button-slider").eq(a-1).css("background-color","rgba(34, 167, 240,1)"); 
   });
+
+$(".next-slid").on('click',function(){
+  a++;
+  /*if(a == 2){
+    a = 0;
+  }*/
+});
 
   //Controles de guardar, borrar, dibujar del Paint
   $(".control-paint").on('click',function(){
@@ -199,7 +250,21 @@ $(document).ready(function(){
            method:'post',
            dataType:'json',
            success:function(output){
-              $(".tg").append("<tr><th class='tg-8bhd'>Nombre:</th><th class='tg-baqh'>"+output[0]['nombre']+"</th></tr><tr><td class='tg-8bhd'>Apellidos:</td><td class='tg-baqh'>"+output[0]['apellidos']+"</td></tr><tr><td class='tg-8bhd'>Email:</td><td class='tg-baqh'>"+output[0]['email']+"</td></tr><tr><td class='tg-8bhd'>Puntos:</td><td class='tg-baqh'>"+output[0]['puntos']+"</td></tr><tr><td class='tg-8bhd'>Perfil de Usuario:</td><td class='tg-baqh'>Alumno</td></tr>");
+              $(".tg").append("<tr><th class='tg-8bhd'>Nombre:</th><th class='tg-baqh'>"+output[0]['nombre']+"</th></tr><tr><td class='tg-8bhd'>Apellidos:</td><td class='tg-baqh'>"+output[0]['apellidos']+"</td></tr><tr><td class='tg-8bhd'>Email:</td><td class='tg-baqh'>"+output[0]['email']+"</td></tr><tr><td class='tg-8bhd'>Puntos:</td><td class='tg-baqh'>"+output[0]['puntos']+"</td></tr>");
+            }
+          });
+
+         //Seleccionamos datos de usuario que se mostraran en pantalla
+         var postData = $(this).serialize();
+         $.ajax({
+             url:"../M-master/perfil/imagenpaint",
+             data:postData,
+             method:'post',
+             dataType:'json',
+             success:function(output){
+                for(i = 0; i < output.length; i++){
+                  $(".imagenpaint").append("<img src='"+output[i]['fuente']+"' />");
+                }
             }
           });
     }
@@ -214,7 +279,7 @@ $(document).ready(function(){
            dataType:'json',
            success:function(output){
               for(i = 0; i < output.length; i++){
-                $(".cuentos").append("<div class='item-juego' id='"+output[i]['nombre']+"'><a href='../M-master/game'><img class='imagen-juego' src='"+output[i]['fuente']+"' /></a><div class='text-game'><a href='../M-master/game'><span>"+output[i]['nombre']+"</span></br></a><span>"+output[i]['descripcion']+"</span></div></div>");
+                $(".cuentos").append("<div class='item-juego' id='"+output[i]['nombre']+"'><a href='../M-master/game'><img class='imagen-juego' src='"+output[i]['fuente']+"' /></a><div class='text-game'><a href='../M-master/game'><div class='juega'><img src='/M-master/pub/images/cuentalo.png' />Interactúa!</div><div>"+output[i]['nombre']+"</div></br></a></div><a href='../M-master/game'><div class='descripcion'>"+output[i]['descripcion']+"</div></a></div>");
               }
 
               //Indicamos que cuando clique encima del cuento de Berta se cree una variable en localstorage que se encargara de pasarle a la vista Game el juego y el nivel que ha escodigo el usuario
@@ -256,7 +321,7 @@ $(document).ready(function(){
            dataType:'json',
            success:function(output){
               for(i = 0; i < output.length; i++){
-                $(".juegos").append("<div class='item-juego' id='"+output[i]['nombre']+"'><a href='../M-master/game'><img class='imagen-juego' src='"+output[i]['fuente']+"' /></a><div class='text-game'><a href='../M-master/game'><span>"+output[i]['nombre']+"</span></br></a><span>"+output[i]['descripcion']+"</span></div></div>");
+                $(".juegos").append("<div class='item-juego' id='"+output[i]['nombre']+"'><a href='../M-master/game'><img class='imagen-juego' src='"+output[i]['fuente']+"' /></a><div class='text-game'><a href='../M-master/game'><div class='juega'><img src='/M-master/pub/images/juegalo.png' />Juégalo!</div><div>"+output[i]['nombre']+"</div></br></a></div><a href='../M-master/game'><div class='descripcion'>"+output[i]['descripcion']+"</div></a></div>");
               }
 
               //Mismo proceso con los cuentos solo que ahora con los juegos
@@ -403,14 +468,46 @@ var show_mesg = function(str){
 //------------------------------------------------------------------------------
 
 
+//Menu cambio de css dependiendo de la posicion
+   if(aux_path[aux_path.length-1] == '' || aux_path[aux_path.length-1] == 'home'){
+      $("nav ul a:nth-child(1)").css('background-color','rgba(137, 196, 244,1)');
+      $(".readcrumb").append("<a href='/M-master/'>Tic Emocionat</a> / <a href='/M-master/home'>Juegos</a>");
+   }
+
+   if(aux_path[aux_path.length-1] == "cuentos"){
+      $("nav ul a:nth-child(2)").css('background-color','rgba(137, 196, 244,1)');
+      $(".readcrumb").append("<a href='/M-master/'>Tic Emocionat</a> / <a href='/M-master/cuentos'>Cuentos</a>");
+   }
+
+   if(aux_path[aux_path.length-1] == "paint"){
+      $("nav ul a:nth-child(3)").css('background-color','rgba(137, 196, 244,1)');
+      $(".readcrumb").append("<a href='/M-master/'>Tic Emocionat</a> / <a href='/M-master/paint'>Paint</a>");
+   }
+
+   if(aux_path[aux_path.length-1] == "emociones"){
+      $("nav ul a:nth-child(4)").css('background-color','rgba(137, 196, 244,1)');
+   }
+
+   if(aux_path[aux_path.length-1] == "perfil"){
+      $(".readcrumb").append("<a href='/M-master/'>Tic Emocionat</a> / <a href='/M-master/perfil'>Perfil</a>");
+   }
+
+   if(aux_path[aux_path.length-1] == "licencia"){
+      $(".readcrumb").append("<a href='/M-master/'>Tic Emocionat</a> / <a href='/M-master/licencia'>Licencia</a>");
+   }
+
 //En la vista Game
 if(aux_path[aux_path.length-1] == 'game'){
   //asignamos el juego y el nivel a traves de localstorage
   juego=localStorage['juego'];
   nivel=localStorage['nivel'];
+
+      $(".readcrumb").append("<a href='/M-master/'>Tic Emocionat</a> / <a href='/M-master/home'>Juegos</a> / "+juego);
+
     var mem=new Array;
     //Dependiendo de la variable se cargaran estos distintos juegos/cuentos en la misma vista
     if(juego=="Memory"){
+      $(".jgame").css("background-image","url(/M-master/pub/images/clouds.png)");
     $.get('../M-master/game',
       { juego: 'memory' },
       function(datos) {
@@ -423,6 +520,8 @@ if(aux_path[aux_path.length-1] == 'game'){
         cargrelaciona(juego,nivel,mem);
       });}
     if(juego=="Berta"){
+      $(".jgame").css("background-image","none");
+      $(".jgame").css("background-color","rgba(50,50,50,1)");
     $.get('../M-master/game',
       { juego: "Berta" },
       function(datos) {
@@ -444,6 +543,7 @@ if(aux_path[aux_path.length-1] == 'emociones'|| aux_path[aux_path.length-1] == '
 
 //Funcion de carga del juego Memory
 function cargmemory(juego,nivel,mem){
+  if(localStorage['juego'] == "Memory"){
     $.ajax({
       url:'../M-master/game/selectgame',
       type:'POST',
@@ -537,17 +637,17 @@ i=0;
     cont = cont+1;
     var id = $(this).attr('id');
     if(cont==2){
-      $("#img"+id).show("clip",1500);
+      $("#img"+id).show("clip",500);
       comp.push($("#img"+id).attr('name'));
       cad1=comp[0];
       cad2=comp[1];
       if(cad1===cad2){
-      $("#img"+id).switchClass( "inc", "cor", 1000 );
-      $("#"+idant).switchClass( "inc", "cor", 1000 );
+      $("#img"+id).switchClass( "inc", "cor", 500 );
+      $("#"+idant).switchClass( "inc", "cor", 500 );
       comprobante=comprobante+1;
         }
       else{
-        $(".inc").hide("clip",1500);
+        $(".inc").hide("clip",500);
           }
       cont=0;
       comp=[];
@@ -556,17 +656,17 @@ i=0;
     else if(cont<2){
       idant="img"+id;
       comp.push($("#img"+id).attr('name'));
-      $("#img"+id).show("clip",1500);
+      $("#img"+id).show("clip",500);
       }
       //aquí compruebo si ha terminado el juego en caso de que sea asi se le da un mensaje y se llama a la funcion rangoup que le suma puntos al niño en caso de haber finalizado el juego por primera vez
-    if(comprobante==data.length){
-      alert("correcto");
+    if(comprobante==data.length){ 
       $.ajax({
           url:'../M-master/game/rangoup',
           type:'POST',
           datatype:'json',
           data:{game: juego,level: idnivel},
           success:function(respuesta){
+            alert("MUY BIEN ERES UN CAMPEÓN");
                             }
                           });
 
@@ -578,6 +678,7 @@ i=0;
         alert(JSON.stringify(data));
       }
       })
+  }
 };
 
 //Carga del juego relaciona
@@ -684,7 +785,7 @@ $("#relaciona-caja3 div").on('click',function(){
     win=win-1;
     if(win==0)
     {
-      alert("MOLT BE ETS UN CAMPIÓ"); 
+      alert("MUY BIEN ERES UN CAMPEÓN"); 
       //voy restando a win hasta que sepa si es 0 entonces significa que ha ganado el juego y entonces llamo a la funcion rango up
       $.ajax({
          url:'../M-master/game/rangoup',
@@ -971,11 +1072,12 @@ function pincelmenos(e) {
       success:function(respuesta){
            var data = JSON.parse(respuesta);
            for(i=0;i<data.length;i++){
-            $("#container").append("<section><img class='parallax-window' src='"+data[i].fuente+"' /><div class='emocion'><span>Que es "+data[i].nombre+"?</span><div>"+data[i].descripcion+"</div></div></section>");
+            $("#container").append("<section><img class='parallax-window' src='"+data[i].fuente+"' /><div class='emocion'><span>Qué es "+data[i].nombre+"?</span><div>"+data[i].descripcion+"</div></div></section>");
            }
       }
     })
   }
+
 
 });
 

@@ -31,8 +31,7 @@
 				$user = $this -> model -> login($email,$password);
 				if($user == TRUE){//si lo que retorna la funcion es 1 o mayor no es false
 					Session::set('user',$email);//seteamos session de usuario y rol
-					Session::set('rol',$user);  
-             		setcookie('user',Session::get('user'),0,APP_W);
+					Session::set('rol',$user);
              		if($user == 2){//retorna usuario normal
          				$this -> ajax_set(array('redirect'=>APP_W.'home'));
          			}else{//retorna admin

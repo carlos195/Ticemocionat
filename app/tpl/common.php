@@ -32,6 +32,7 @@
 										<div class="row">
 											<input type="password" class="password" name="password" placeholder="Contraseña"/>
 										</div>	
+										<div class="recordar">Recordar contraseña</div>
 										<div class="row">
 											<input type="submit" value="Ingresar" />
 										</div>
@@ -42,7 +43,10 @@
 
 				<div id="user-account">
 	                <div id="login">INICIA SESIÓN</div>
-	            </div>';
+	            </div>
+	            <div id="login-img"><img src="../M-master/pub/images/user.png" /></div>
+	            ';
+
 			}else{
 				echo '<div id="user-account">
 	                	<a href="/M-master/perfil"><span>'.$_SESSION['user'].'</span></a>
